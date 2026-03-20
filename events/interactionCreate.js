@@ -1,14 +1,20 @@
 const { Events, MessageFlags } = require('discord.js');
-const allowedChannel = ['1418946574737866933', '1452078412280889523']; // channel IDs where commands are allowed
-
+const abhServerChannel = '1418946574737866933'
+const testServerChannel = '1452078412280889521'
+// '1452078412280889523' not sure how and why but the text channel id changed??
+const allowedChannel = [abhServerChannel, testServerChannel]; // channel IDs where commands are allowed
+1452078412280889523
 const interactionCreateEvent = async (interaction) => {
   if (!interaction.isChatInputCommand()) return;
 
   // gets the command from the collection, and if it doesnt exist, logs an error
   const command = interaction.client.commands.get(interaction.commandName);
 
+  const isAllowedChannel = allowedChannel.includes(interaction.channel.parentId);
+  const isAllowedThread = interaction.channel.isThread();
+
   // if the command isnt used in the allowed channel, reply with a message and return
-  if (interaction.channelId !== allowedChannel) {
+  if (!isAllowedChannel && !isAllowedThread) {
     interaction.reply({
       content: `Please use commands in <#${allowedChannel}>.`,
       ephemeral: true,
