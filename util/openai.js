@@ -30,7 +30,7 @@ const request = async (question, userId) => {
         response: response.output_text,
       }
     ]
-  })
+  });
 
   // save the chat document to the database
   try {
