@@ -40,10 +40,5 @@ for (const file of eventFiles) {
     client.on(event.name, (...args) => event.execute(...args));
   }
 }
-const { ActivityType } = require('discord.js');
 
-client.once('ready', () => {
-    client.user.setActivity('Use /ask for AB Heart help', { type: ActivityType.Watching });
-    console.log(`Logged in as ${client.user.tag}`);
-});
 client.login(process.env.DISCORD_TOKEN);
