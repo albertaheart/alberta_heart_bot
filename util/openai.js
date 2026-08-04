@@ -7,11 +7,11 @@ const openai = new OpenAI({
   apiKey: process.env.CHATGPT_API_KEY,
 });
 
-const request = async (question, userId) => {
+const request = async (question, previousResponseId = null, userId) => {
   const response = await openai.responses.create({
     model: 'gpt-5-mini',
     instructions: ROLE,
-    input: question,
+    input: question, ...(previousResponseId && { previous_response_id: previousResponseId }),
     tools: [
       { 
         type: 'file_search',
@@ -50,8 +50,8 @@ SCOPE & ROLE
 - Do NOT rely on general world knowledge unless it is explicitly supported by the documents.
 
 CONVERSATION CONTEXT
-- Each question is a standalone request.
-- Do NOT assume prior context, memory, or follow-up discussion.
+- You are in a multi-turn conversation.
+- Use prior context from the conversation history to inform your answers.
 - Answer only the current question as asked.
 
 RETRIEVAL & GROUNDING

@@ -1,5 +1,7 @@
 const { Events, MessageFlags } = require('discord.js');
-const allowedChannel = ['1418946574737866933', '1452078412280889523']; // channel IDs where commands are allowed
+const abhServerChannel = '1418946574737866933'
+const testServerChannel = '1452078412280889523'
+const allowedChannel = [abhServerChannel, testServerChannel]; // channel IDs where commands are allowed
 
 const interactionCreateEvent = async (interaction) => {
   if (!interaction.isChatInputCommand()) return;
@@ -7,8 +9,11 @@ const interactionCreateEvent = async (interaction) => {
   // gets the command from the collection, and if it doesnt exist, logs an error
   const command = interaction.client.commands.get(interaction.commandName);
 
+  const isAllowedChannel = allowedChannel.includes(interaction.channelId);
+  const isAllowedThread = interaction.channel.isThread() && allowedChannel.includes(interaction.channel.parentId);;
+
   // if the command isnt used in the allowed channel, reply with a message and return
-  if (interaction.channelId !== allowedChannel) {
+  if (!isAllowedChannel && !isAllowedThread) {
     interaction.reply({
       content: `Please use commands in <#${allowedChannel}>.`,
       ephemeral: true,
