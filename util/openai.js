@@ -33,7 +33,7 @@ const request = async (question, userId) => {
   // save the chat document to the database
   try {
     const response = await chat.save();
-    console.log(response)
+    console.log(response);
   } catch (error) {
     console.error('Error saving chat to database:', error);
   }
