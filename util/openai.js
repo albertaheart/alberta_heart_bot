@@ -24,17 +24,16 @@ const request = async (question, userId) => {
   // make a new chat document for each question and response
   const chat = new Chat({
     userId: crypto.createHash('sha256').update(userId).digest('hex'),
-    messages: [
-      {
-        question,
-        response: response.output_text,
-      }
-    ]
+    question: question,
+    response: response.output_text,
+    parentObjectId: null, //TODO
+    parentThreadId: null //TODO
   });
 
   // save the chat document to the database
   try {
-    await chat.save();
+    const response = await chat.save();
+    console.log(response)
   } catch (error) {
     console.error('Error saving chat to database:', error);
   }

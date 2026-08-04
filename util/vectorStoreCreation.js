@@ -9,7 +9,7 @@ const main = async () => {
   const date = new Intl.DateTimeFormat('en-CA').format(new Date());
 
   const vs = await openai.vectorStores.create({
-    name: 'ABH Info 1.1',
+    name: 'ABH Info 1.2',
     description: `Contains all Alberta Heart Bot information, created on ${date}.`
   });
 

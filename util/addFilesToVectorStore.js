@@ -1,4 +1,4 @@
-// This script was last ran on 2025-12-26
+// This script was last ran on 2025-05-20
 
 require('dotenv').config();
 const { OpenAI } = require('openai');
@@ -145,8 +145,15 @@ const fetchFilesRecursive = async (FOLDER_ID, currentPath = 'root') => {
       q: `'${FOLDER_ID}' in parents and trashed = false`,
       fields: 'nextPageToken, files(id, name, mimeType)',
       pageSize: 100,
-      pageToken: pageToken
+      pageToken: pageToken,
+      supportsAllDrives: true,
+      includeItemsFromAllDrives: true,
+    }).catch(err => {
+      console.error('Drive API error:', err.message);
+      return { data: { files: [] } };
     });
+
+    console.log(`Found ${res.data.files.length} files in ${currentPath}`);
 
     for (const file of res.data.files) {
       const relativePath = `${currentPath}/${file.name}`; // construct relative path for file
@@ -182,6 +189,7 @@ const fetchFilesRecursive = async (FOLDER_ID, currentPath = 'root') => {
 };
 
 const main = async () => {
+  console.log('Starting...');
   await fetchFilesRecursive(FOLDER_ID, 'root');
 
   // wait for any remaining file uploads in the queue to finish
