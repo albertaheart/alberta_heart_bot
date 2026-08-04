@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, messageLink } = require('discord.js');
+const { SlashCommandBuilder } = require('discord.js');
 const { request } = require('../../util/openai');
 const MODEL_INPUT_COST_PER_1M_TOKENS = 0.25 / 1000000; // $0.25 per 1M tokens for gpt-5-mini input
 const MODEL_OUTPUT_COST_PER_1M_TOKENS = 2.00 / 1000000; // $2.00 per 1M tokens for gpt-5-mini output
@@ -55,7 +55,7 @@ const askCommand = async (interaction) => {
 
     threadResponseIds.set(thread.id, response.id);
     if (!interaction.channel.isThread()){
-      await interaction.editReply(`Conversation started in the attached thread!`);
+      await interaction.editReply('Conversation started in the attached thread!');
       await thread.send('Question: ' + question + '\n\n' + response.output_text);
     }
     else{

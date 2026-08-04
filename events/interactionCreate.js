@@ -1,6 +1,6 @@
 const { Events, MessageFlags } = require('discord.js');
-const abhServerChannel = '1418946574737866933'
-const testServerChannel = '1452078412280889523'
+const abhServerChannel = '1418946574737866933';
+const testServerChannel = '1452078412280889523';
 const allowedChannel = [abhServerChannel, testServerChannel]; // channel IDs where commands are allowed
 
 const interactionCreateEvent = async (interaction) => {
