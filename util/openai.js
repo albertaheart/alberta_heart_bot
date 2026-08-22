@@ -1,13 +1,11 @@
 require('dotenv').config();
-const crypto = require('crypto');
 const { OpenAI } = require('openai');
-const Chat = require('../models/chat'); 
 
 const openai = new OpenAI({
   apiKey: process.env.CHATGPT_API_KEY,
 });
 
-const request = async (question, previousResponseId = null, userId) => {
+const request = async (question, previousResponseId = null) => {
   const response = await openai.responses.create({
     model: 'gpt-5-mini',
     instructions: ROLE,
@@ -20,24 +18,7 @@ const request = async (question, previousResponseId = null, userId) => {
       }
     ]
   });
-
-  // make a new chat document for each question and response
-  const chat = new Chat({
-    userId: crypto.createHash('sha256').update(userId).digest('hex'),
-    question: question,
-    response: response.output_text,
-    parentObjectId: null, //TODO
-    parentThreadId: null //TODO
-  });
-
-  // save the chat document to the database
-  try {
-    const response = await chat.save();
-    console.log(response);
-  } catch (error) {
-    console.error('Error saving chat to database:', error);
-  }
-    
+  
   return response;
 };
 

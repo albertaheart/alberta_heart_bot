@@ -23,12 +23,10 @@ const chatSchema = new mongoose.Schema({
   },
   parentObjectId: {
     type: String,
-    required: true,
     ref: 'Chat'
   },
   parentThreadId: {
-    type: Number,
-    required: true
+    type: String,
   }
 }, { timestamps: true });
 
