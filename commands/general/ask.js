@@ -46,7 +46,7 @@ const askCommand = async (interaction) => {
     const previousResponseIds = threadResponseIds.get(thread.id) ?? null;
     const parentResponseId = previousResponseIds ? previousResponseIds.responseId : null;
     const parentDbObjectId = previousResponseIds ? previousResponseIds.chatObjectId : null;
-    console.log("PREVIOUS RESPONSE ID: ", previousResponseIds)
+    console.log('PREVIOUS RESPONSE ID: ', previousResponseIds);
     // make the request to openai and get the response
     const aiResponse = await request(question, parentResponseId);
     // make a new chat document for each question and response

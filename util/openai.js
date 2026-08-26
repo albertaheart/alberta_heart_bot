@@ -9,7 +9,8 @@ const request = async (question, previousResponseId = null) => {
   const response = await openai.responses.create({
     model: 'gpt-5-mini',
     instructions: ROLE,
-    input: question, ...(previousResponseId && { previous_response_id: previousResponseId }),
+    input: question, 
+    ...(previousResponseId && { previous_response_id: previousResponseId }),
     tools: [
       { 
         type: 'file_search',
